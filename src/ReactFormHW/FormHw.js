@@ -24,6 +24,19 @@ export default class FormHw extends Component {
         });
     };
 
+    handleSubmit = (user) => {
+        const newUser = { ...user };
+
+        // push user mới vô data
+        const userClone = [...this.state.userData];
+        userClone.push(newUser);
+
+        // Set lại state
+        this.setState({
+            userData: userClone,
+        });
+    };
+
     render() {
         return (
             <div className="container">
@@ -32,7 +45,7 @@ export default class FormHw extends Component {
                         Thông Tin Sinh Viên
                     </h1>
                 </div>
-                <Modal />
+                <Modal onSubmit={this.handleSubmit} />
                 <Users
                     dataUser={this.state.userData}
                     deleteUser={this.handleDeleteUser}
