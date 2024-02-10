@@ -3,6 +3,7 @@ import Users from "./Users";
 import Modal from "./Modal";
 import "./style.scss";
 import data from "./data.json";
+import Search from "./Search";
 
 export default class FormHw extends Component {
     constructor(props) {
@@ -37,6 +38,16 @@ export default class FormHw extends Component {
         });
     };
 
+    handleOnSearch = (msv) => {
+        const newData = [...this.state.userData];
+        const dataSearch = newData.filter((item) => {
+            return item.msv == msv;
+        });
+        this.setState({
+            userData: dataSearch,
+        });
+    };
+
     render() {
         return (
             <div className="container">
@@ -46,6 +57,7 @@ export default class FormHw extends Component {
                     </h1>
                 </div>
                 <Modal onSubmit={this.handleSubmit} />
+                <Search onSearch={this.handleOnSearch} />
                 <Users
                     dataUser={this.state.userData}
                     deleteUser={this.handleDeleteUser}
