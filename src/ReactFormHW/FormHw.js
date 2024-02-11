@@ -11,6 +11,7 @@ export default class FormHw extends Component {
 
         this.state = {
             userData: data,
+            editUser: null,
         };
     }
 
@@ -25,19 +26,55 @@ export default class FormHw extends Component {
         });
     };
 
+    // Tìm vị trí theo msv
+    findIndex = (msv) => {
+        const index = this.state.userData.findIndex((item) => {
+            return item.msv == msv;
+        });
+        return index;
+    };
+
     handleSubmit = (user) => {
-        const newUser = { ...user };
+        // Tồn tại id thì cập nhật còn không thì thêm mới
+        if (user.msv) {
+            console.log("Cập nhật");
+            // Cập nhật sinh viên
+            // Tìm vị trí
+            const index = this.findIndex(user.msv);
+            // clone userData
+            const userDataClone = [...this.state.userData];
+            // cập nhật thông tin sinh viên thông qua index
+            if (index != -1) {
+                userDataClone[index] = user;
+            }
+            // Set lại state
+            this.setState({
+                userData: userDataClone,
+            });
+        } else {
+            console.log("Thêm mới");
+            // Thêm mới sinh viên
+            const newUser = { ...user };
 
-        // push user mới vô data
-        const userClone = [...this.state.userData];
-        userClone.push(newUser);
+            // push user mới vô data
+            const userClone = [...this.state.userData];
+            userClone.push(newUser);
 
-        // Set lại state
+            // Set lại state
+            this.setState({
+                userData: userClone,
+            });
+        }
+    };
+
+    // EditUser
+    handleEditUser = (user) => {
         this.setState({
-            userData: userClone,
+            editUser: user,
         });
     };
 
+    // Search
     handleOnSearch = (msv) => {
         const newData = [...this.state.userData];
         const dataSearch = newData.filter((item) => {
@@ -56,11 +93,16 @@ export default class FormHw extends Component {
                         Thông Tin Sinh Viên
                     </h1>
                 </div>
-                <Modal onSubmit={this.handleSubmit} />
+                <Modal
+                    onSubmit={this.handleSubmit}
+                    dataEditUser={this.state.editUser}
+                />
                 <Search onSearch={this.handleOnSearch} />
                 <Users
                     dataUser={this.state.userData}
                     deleteUser={this.handleDeleteUser}
+                    on
+                    editUser={this.handleEditUser}
                 />
             </div>
         );

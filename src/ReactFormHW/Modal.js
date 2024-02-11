@@ -31,7 +31,29 @@ export default class Modal extends Component {
         this.props.onSubmit(this.state);
     };
 
+    // componentWillReceiveProps chạy khi nhận props có sự thay đổi
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
+        if (nextProps.dataEditUser) {
+            this.setState({
+                msv: nextProps.dataEditUser.msv,
+                name: nextProps.dataEditUser.name,
+                phone: nextProps.dataEditUser.phone,
+                email: nextProps.dataEditUser.email,
+            });
+        } else {
+            this.setState({
+                msv: "",
+                name: "",
+                phone: "",
+                email: "",
+            });
+        }
+    }
+
     render() {
+        // const { dataEditUser } = this.props;
+        // console.log(dataEditUser);
         return (
             <div className="mt-3">
                 <form
@@ -49,6 +71,7 @@ export default class Modal extends Component {
                                 onChange={(event) => {
                                     this.handleOnChange(event);
                                 }}
+                                value={this.state.msv}
                             />
                         </div>
                         <div className="mb-3 col-6">
@@ -60,6 +83,7 @@ export default class Modal extends Component {
                                 onChange={(event) => {
                                     this.handleOnChange(event);
                                 }}
+                                value={this.state.name}
                             />
                         </div>
                     </div>
@@ -74,6 +98,7 @@ export default class Modal extends Component {
                                 onChange={(event) => {
                                     this.handleOnChange(event);
                                 }}
+                                value={this.state.phone}
                             />
                         </div>
                         <div className="mb-3 col-6">
@@ -85,12 +110,15 @@ export default class Modal extends Component {
                                 onChange={(event) => {
                                     this.handleOnChange(event);
                                 }}
+                                value={this.state.email}
                             />
                         </div>
                     </div>
 
                     <button type="submit" className="btn btn-success">
-                        Thêm sinh viên
+                        {this.props.dataEditUser
+                            ? "Cập nhật sinh viên"
+                            : "Thêm sinh viên"}
                     </button>
                 </form>
             </div>

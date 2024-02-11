@@ -3,7 +3,7 @@ import UsersItem from "./UsersItem";
 
 export default class Users extends Component {
     render() {
-        const { dataUser, deleteUser } = this.props;
+        const { dataUser, deleteUser, editUser } = this.props;
         return (
             <div>
                 <table className="table">
@@ -23,6 +23,7 @@ export default class Users extends Component {
                                     <UsersItem
                                         dataUser={item}
                                         deleteUser={deleteUser}
+                                        editUser={editUser}
                                     />
                                 </tr>
                             );

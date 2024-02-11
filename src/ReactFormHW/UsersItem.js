@@ -6,6 +6,11 @@ export default class UsersItem extends Component {
         deleteUser(msv);
     };
 
+    handleEditUser = (user) => {
+        const { editUser } = this.props;
+        editUser(user);
+    };
+
     render() {
         const { dataUser } = this.props;
         // console.log(dataUser);
@@ -24,7 +29,14 @@ export default class UsersItem extends Component {
                     >
                         Delete
                     </button>
-                    <button className="btn btn-primary">Edit</button>
+                    <button
+                        className="btn btn-primary"
+                        onClick={() => {
+                            this.handleEditUser(dataUser);
+                        }}
+                    >
+                        Edit
+                    </button>
                 </td>
             </>
         );
