@@ -16,14 +16,9 @@ export default class Modal extends Component {
         console.log(event.target.value);
         const { name, value } = event.target;
         console.log(name, value);
-        this.setState(
-            {
-                [name]: value,
-            },
-            () => {
-                console.log(this.state);
-            }
-        );
+        this.setState({
+            [name]: value,
+        });
     };
 
     handleOnSubmit = (event) => {
@@ -54,6 +49,7 @@ export default class Modal extends Component {
     render() {
         // const { dataEditUser } = this.props;
         // console.log(dataEditUser);
+        const { dataEditUser, upDateUser } = this.props;
         return (
             <div className="mt-3">
                 <form
@@ -71,7 +67,7 @@ export default class Modal extends Component {
                                 onChange={(event) => {
                                     this.handleOnChange(event);
                                 }}
-                                value={this.state.msv}
+                                value={dataEditUser?.msv}
                             />
                         </div>
                         <div className="mb-3 col-6">
@@ -116,9 +112,16 @@ export default class Modal extends Component {
                     </div>
 
                     <button type="submit" className="btn btn-success">
-                        {this.props.dataEditUser
-                            ? "Cập nhật sinh viên"
-                            : "Thêm sinh viên"}
+                        {this.props.dataEditUser ? "" : "Thêm sinh viên"}
+                    </button>
+                    <button
+                        type="button"
+                        className="btn btn-warning ms-1"
+                        onClick={() => {
+                            upDateUser(this.state);
+                        }}
+                    >
+                        Cập nhật sinh viên
                     </button>
                 </form>
             </div>

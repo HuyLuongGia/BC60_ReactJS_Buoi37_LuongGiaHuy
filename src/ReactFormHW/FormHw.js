@@ -35,42 +35,42 @@ export default class FormHw extends Component {
     };
 
     handleSubmit = (user) => {
-        // Tồn tại id thì cập nhật còn không thì thêm mới
-        if (user.msv) {
-            console.log("Cập nhật");
-            // Cập nhật sinh viên
-            // Tìm vị trí
-            const index = this.findIndex(user.msv);
-            // clone userData
-            const userDataClone = [...this.state.userData];
-            // cập nhật thông tin sinh viên thông qua index
-            if (index != -1) {
-                userDataClone[index] = user;
-            }
-            // Set lại state
-            this.setState({
-                userData: userDataClone,
-            });
-        } else {
-            console.log("Thêm mới");
-            // Thêm mới sinh viên
-            const newUser = { ...user };
+        // Tồn tại msv thì cập nhật còn không thì thêm mới
+        // Thêm mới sinh viên
+        const newUser = { ...user };
 
-            // push user mới vô data
-            const userClone = [...this.state.userData];
-            userClone.push(newUser);
+        // push user mới vô data
+        const userClone = [...this.state.userData];
+        userClone.push(newUser);
 
-            // Set lại state
-            this.setState({
-                userData: userClone,
-            });
-        }
+        // Set lại state
+        this.setState({
+            userData: userClone,
+        });
     };
 
     // EditUser
     handleEditUser = (user) => {
         this.setState({
             editUser: user,
+        });
+    };
+    handleUpdateUser = (user) => {
+        // console.log(user);
+        // Cập nhật sinh viên
+        // Tìm vị trí
+        const index = this.findIndex(user.msv);
+        console.log(index);
+        // clone userData
+        const userDataClone = [...this.state.userData];
+        // cập nhật thông tin sinh viên thông qua index
+        if (index != -1) {
+            userDataClone[index] = user;
+        }
+        console.log(userDataClone);
+        // Set lại state
+        this.setState({
+            userData: userDataClone,
         });
     };
 
@@ -96,6 +96,7 @@ export default class FormHw extends Component {
                 <Modal
                     onSubmit={this.handleSubmit}
                     dataEditUser={this.state.editUser}
+                    upDateUser={this.handleUpdateUser}
                 />
                 <Search onSearch={this.handleOnSearch} />
                 <Users
